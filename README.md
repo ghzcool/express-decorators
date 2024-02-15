@@ -1,6 +1,9 @@
 # Express server with decorators
 NodeJS express server using TypeScript with decorators.
 
+This is sample project for demonstration of decorators in TypeScript.
+It can be used as blank project for simple backend on NodeJS and express.
+
 ## @ExpressController
 Class decorator for express controllers
 
@@ -54,3 +57,9 @@ Field decorator that set's instance of registered AutowireComponent
 @Autowire("SampleService")
 sampleService: SampleServiceInterface;
 ```
+
+## Usage
+
+**It's important to keep order of imports.**
+
+Import AutowireComponent first and then import component that uses it with Autowire.
