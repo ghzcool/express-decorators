@@ -1,14 +1,13 @@
 import {SampleServiceInterface} from "../services";
 import {SampleModel} from "../models/SampleModel";
-import {registerAutowireInstance} from "../app/expressDecorator";
+import {AutowireComponent} from "../app/expressDecorator";
 
-class TestService implements SampleServiceInterface {
+@AutowireComponent
+class SampleService implements SampleServiceInterface {
   sampleMethod() {
     return new SampleModel({name: "Test", description: "test"});
   }
 }
-
-registerAutowireInstance("SampleService", TestService);
 
 const {SampleController} = require("../controllers");
 
