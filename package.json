@@ -1,8 +1,14 @@
 {
   "name": "@ppirogov/express-decorators",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "This library provides a set of **TypeScript** decorators to simplify route handling and dependency injection in Express applications. It includes route decorators like GetMapping, PostMapping, and ExpressController to streamline route registration, as well as Autowire and AutowireComponent for managing components and automatic dependency injection, enabling a clean, modular, and declarative approach to building Express-based applications.",
-  "main": "src/app/expressDecorator.ts",
+  "main": "./dist/app/expressDecorator.js",
+  "types": "./dist/app/expressDecorator.d.ts",
+  "files": [
+    "/dist/app/expressDecorator.js",
+    "/dist/app/expressDecorator.d.ts",
+    "package.json"
+  ],
   "scripts": {
     "build": "rimraf dist && tsc",
     "start": "npm run build && node dist/index.js",
