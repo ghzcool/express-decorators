@@ -1,8 +1,8 @@
 {
-  "name": "decorators",
+  "name": "@ppirogov/express-decorators",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.ts",
+  "description": "This library provides a set of **TypeScript** decorators to simplify route handling and dependency injection in Express applications. It includes route decorators like GetMapping, PostMapping, and ExpressController to streamline route registration, as well as Autowire and AutowireComponent for managing components and automatic dependency injection, enabling a clean, modular, and declarative approach to building Express-based applications.",
+  "main": "src/app/expressDecorator.ts",
   "scripts": {
     "build": "rimraf dist && tsc",
     "start": "npm run build && node dist/index.js",
@@ -16,13 +16,13 @@
     "jest": "^29.7.0",
     "rimraf": "^5.0.5",
     "ts-jest": "^29.1.2",
-    "typescript": "^5.3.3"
-  },
-  "dependencies": {
+    "typescript": "^5.3.3",
     "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "cors": "^2.8.5"
   },
-  "author": "",
+  "peerDependencies": {
+    "express": "*"
+  },
+  "author": "Pavel Pirogov",
   "license": "ISC"
 }

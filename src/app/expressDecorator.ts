@@ -3,7 +3,12 @@ import {Express, Request, Response} from "express";
 type ExpressHandler = (req: Request, res: Response) => void;
 
 let expressApp: Express = null;
-export const registerExpressApp = (app: Express) => expressApp = app;
+let expressPrefix: string = "";
+
+export const registerExpressApp = (app: Express, prefix: string = "") => {
+  expressApp = app;
+  expressPrefix = prefix;
+}
 
 export const ExpressMapping: any = function (path: string, method: "get" | "post" | "put" | "delete" | "use"): any {
   return function (targetInstance: any, methodName: string, context: any = {}): ExpressHandler {
@@ -12,7 +17,7 @@ export const ExpressMapping: any = function (path: string, method: "get" | "post
     }
 
     if (path && expressApp) {
-      expressApp[method](path, replaceMethod);
+      expressApp[method](expressPrefix + path, replaceMethod);
     }
     return replaceMethod;
   }
