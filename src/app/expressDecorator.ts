@@ -1,51 +1,57 @@
-import {Express, Request, Response} from "express";
+import {Express, Request, Response} from 'express';
 
 type ExpressHandler = (req: Request, res: Response) => void;
 
 let expressApp: Express = null;
-let expressPrefix: string = "";
+let expressPrefix: string = '';
 
-export const registerExpressApp = (app: Express, prefix: string = "") => {
+export const registerExpressApp = (app: Express, prefix: string = '') => {
   expressApp = app;
   expressPrefix = prefix;
-}
+};
 
-export const ExpressMapping: any = function (path: string, method: "get" | "post" | "put" | "delete" | "use"): any {
+export const ExpressMapping: any = function (path: string, method: 'get' | 'post' | 'put' | 'delete' | 'use'): any {
   return function (targetInstance: any, methodName: string, context: any = {}): ExpressHandler {
     function replaceMethod(req: Request, res: Response) {
-      context.value.call(targetInstance, req, res);
+      try {
+        context.value.call(targetInstance, req, res);
+      } catch (error) {
+        res.setHeader('Content-Type', 'application/json');
+        res.status(500);
+        res.send(error);
+      }
     }
 
     if (path && expressApp) {
       expressApp[method](expressPrefix + path, replaceMethod);
     }
     return replaceMethod;
-  }
+  };
 };
 
 export const GetMapping: any = function (path: string): any {
-  return ExpressMapping(path, "get");
+  return ExpressMapping(path, 'get');
 };
 
 export const PostMapping: any = function (path: string): any {
-  return ExpressMapping(path, "post");
+  return ExpressMapping(path, 'post');
 };
 
 export const PutMapping: any = function (path: string): any {
-  return ExpressMapping(path, "put");
+  return ExpressMapping(path, 'put');
 };
 
 export const DeleteMapping: any = function (path: string): any {
-  return ExpressMapping(path, "delete");
+  return ExpressMapping(path, 'delete');
 };
 
 export const UseMapping: any = function (path: string): any {
-  return ExpressMapping(path, "use");
+  return ExpressMapping(path, 'use');
 };
 
 export const ExpressController = (targetClass: any) => {
   registerExpressController(targetClass.name, targetClass);
-}
+};
 
 const controllersMap: { [key: string]: any } = {};
 
@@ -56,7 +62,7 @@ export const getExpressControllers = () => Object.keys(controllersMap);
 
 export const AutowireComponent = (targetClass: any) => {
   registerAutowireInstance(targetClass.name, targetClass);
-}
+};
 
 const instancesMap: { [key: string]: any } = {};
 
@@ -71,5 +77,5 @@ export const getAutowireInstance = (className: string) => instancesMap[className
 export const Autowire = (className: string) => {
   return (target: any, fieldName: string, context: any = {}): any => {
     target[fieldName] = getAutowireInstance(className) ?? context.value;
-  }
+  };
 };
